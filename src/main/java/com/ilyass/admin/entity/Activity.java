@@ -1,17 +1,17 @@
 package com.ilyass.admin.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "activities")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Activity {
@@ -25,6 +25,18 @@ public class Activity {
     private String activityDescription;
     private String activityDuration;
 
+    @ManyToOne
+    @JoinColumn(name = "instructor_id")
+    private Instructor instructor;
+
+    @ManyToMany
+    @JoinTable(
+            name = "activity_student",
+            joinColumns = @JoinColumn(name = "activity_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private Set<Student> students = new HashSet<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,5 +48,9 @@ public class Activity {
     @Override
     public int hashCode() {
         return Objects.hash(activityId, title, semester, subject, classGroup, activityDescription, activityDuration);
+    }
+
+    public void assignStudentToActivity(Student student) {
+        this.students.add(student);
     }
 }
