@@ -1,10 +1,7 @@
 package com.ilyass.admin.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -14,23 +11,35 @@ import java.util.Set;
 @Table(name = "students")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "student_id" , nullable = false)
     private Long studentId;
+
+    @Basic
+    @Column(name = "student_firstname",nullable = false,length = 45)
     private String firstName;
+
+    @Basic
+    @Column(name = "student_lastname",nullable = false,length = 45)
     private String lastName;
+
+    @Basic
+    @Column(name = "student_level",nullable = false,length = 45)
     private String level;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    //Group of students could have Many activities
     @ManyToMany
     @JoinTable(
-            name = "student_activity",
+            name = "enrolled_in",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "activity_id")
     )
