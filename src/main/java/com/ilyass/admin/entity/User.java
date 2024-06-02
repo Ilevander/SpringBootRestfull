@@ -51,4 +51,9 @@ public class User {
     public int hashCode() {
         return Objects.hash(userId, email, password);
     }
+
+    public void assignRoleToUser(Role role) {
+        this.roles.add(role);
+        role.getUsers().add(this);
+    }
 }
