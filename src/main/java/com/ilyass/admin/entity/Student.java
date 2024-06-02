@@ -1,47 +1,51 @@
 package com.ilyass.admin.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "activities")
+@Table(name = "students")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Activity {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long activityId;
-    private String title;
-    private String semester;
-    private String subject;
-    private String classGroup;
-    private String activityDescription;
-    private String activityDuration;
+    private Long studentId;
+    private String firstName;
+    private String lastName;
+    private String level;
 
-    @ManyToOne
-    @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToMany(mappedBy = "activities")
-    private Set<Student> students = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "student_activity",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "activity_id")
+    )
+    private Set<Activity> activities = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Activity activity = (Activity) o;
-        return Objects.equals(activityId, activity.activityId) && Objects.equals(title, activity.title) && Objects.equals(semester, activity.semester) && Objects.equals(subject, activity.subject) && Objects.equals(classGroup, activity.classGroup) && Objects.equals(activityDescription, activity.activityDescription) && Objects.equals(activityDuration, activity.activityDuration);
+        Student student = (Student) o;
+        return Objects.equals(studentId, student.studentId) && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName) && Objects.equals(level, student.level);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(activityId, title, semester, subject, classGroup, activityDescription, activityDuration);
+        return Objects.hash(studentId, firstName, lastName, level);
     }
 }
