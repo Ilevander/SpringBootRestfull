@@ -17,21 +17,42 @@ import java.util.Set;
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "activity_id" , nullable = false)
     private Long activityId;
+
+    @Basic
+    @Column(name = "activity_title",nullable = false,length = 45)
     private String title;
+
+    @Basic
+    @Column(name = "activity_semester",nullable = false,length = 45)
     private String semester;
+
+    @Basic
+    @Column(name = "activity_subject",nullable = false,length = 45)
     private String subject;
+
+    @Basic
+    @Column(name = "activity_classGroup",nullable = false,length = 45)
     private String classGroup;
+
+    @Basic
+    @Column(name = "activity_description",nullable = false,length = 64)
     private String activityDescription;
+
+    @Basic
+    @Column(name = "activity_duration",nullable = false,length = 45)
     private String activityDuration;
 
-    @ManyToOne
-    @JoinColumn(name = "instructor_id")
+    //Many activities belong to one instructor
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "instructor_id",referencedColumnName = "instructor_id")
     private Instructor instructor;
 
-    @ManyToMany
+    //Many activities belong to Many students
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "activity_student",
+            name = "enrolled_in",
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )

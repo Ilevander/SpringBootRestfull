@@ -56,4 +56,9 @@ public class User {
         this.roles.add(role);
         role.getUsers().add(this);
     }
+
+    public void removeRoleFromUser(Role role) {
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
 }
