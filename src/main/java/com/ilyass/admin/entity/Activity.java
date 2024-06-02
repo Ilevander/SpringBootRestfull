@@ -52,5 +52,11 @@ public class Activity {
 
     public void assignStudentToActivity(Student student) {
         this.students.add(student);
+        student.getActivities().add(this);
+    }
+
+    public void removeStudentFromActivity(Student student) {
+        this.students.remove(student);
+        student.getActivities().remove(this);
     }
 }
