@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+//@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,5 +69,18 @@ public class User {
     public void removeRoleFromUser(Role role) {
         this.roles.remove(role);
         role.getUsers().remove(this);
+    }
+
+    public User(String email,String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
