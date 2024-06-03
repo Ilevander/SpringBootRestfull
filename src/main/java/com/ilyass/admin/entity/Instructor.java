@@ -44,7 +44,6 @@ public class Instructor {
     private User user;
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,5 +55,12 @@ public class Instructor {
     @Override
     public int hashCode() {
         return Objects.hash(instructorId, firstName, lastName, summary);
+    }
+
+    public Instructor(String firstName, String lastName, String summary, User user) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.summary = summary;
+        this.user = user;
     }
 }
