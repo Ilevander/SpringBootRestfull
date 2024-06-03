@@ -27,6 +27,23 @@ public class OperationUtility {
 
     public static void instructorsOperations(UserDao userDao,InstructorDao instructorDao,RoleDao roleDao) {
         createInstructors(userDao,instructorDao,roleDao);
+        updateInstructor(instructorDao);
+        removeInstructor(instructorDao);
+        fetchInstructors(instructorDao);
+    }
+
+    private static void fetchInstructors(InstructorDao instructorDao) {
+        instructorDao.findAll().forEach(instructor -> System.out.println(instructor.toString()));
+    }
+
+    private static void removeInstructor(InstructorDao instructorDao) {
+        instructorDao.deleteById(2L);
+    }
+
+    private static void updateInstructor(InstructorDao instructorDao) {
+        Instructor instructor = instructorDao.findById(1L).orElseThrow(() -> new EntityNotFoundException("Instructor not found"));
+        instructor.setSummary(("Certified Instructor"));
+        instructorDao.save(instructor);
     }
 
     private static void createInstructors(UserDao userDao, InstructorDao instructorDao, RoleDao roleDao) {
@@ -37,6 +54,13 @@ public class OperationUtility {
         userDao.save(user1);
         user1.assignRoleToUser(role);
         Instructor instructor1 = new Instructor("Instructor1FN","Instructor1LN","Experienced Instructor",user1);
+        instructorDao.save(instructor1);
+
+        User user2 = new User("InstructorUser2@gmail.com","pass2");
+        userDao.save(user2);
+        user1.assignRoleToUser(role);
+        Instructor instructor2 = new Instructor("Instructor2FN","Instructor2LN","Senior Instructor",user2);
+        instructorDao.save(instructor2);
     }
 
     private static void fetchRole(RoleDao roleDao) {
