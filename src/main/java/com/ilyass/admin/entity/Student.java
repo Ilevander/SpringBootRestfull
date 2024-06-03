@@ -32,18 +32,22 @@ public class Student {
     @Column(name = "student_level",nullable = false,length = 45)
     private String level;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     //Group of students could have Many activities
-    @ManyToMany
+    @ManyToMany(mappedBy = "students" , fetch = FetchType.LAZY)
     @JoinTable(
             name = "enrolled_in",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "activity_id")
     )
     private Set<Activity> activities = new HashSet<>();
+
+
+    //Only one Student could be just as a One User
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "user_id",referencedColumnName = "user_id",nullable = false)
+    private User user;
+
 
     @Override
     public boolean equals(Object o) {
