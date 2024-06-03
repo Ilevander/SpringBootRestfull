@@ -1,7 +1,9 @@
 package com.ilyass.admin.utility;
 
+import com.ilyass.admin.dao.InstructorDao;
 import com.ilyass.admin.dao.RoleDao;
 import com.ilyass.admin.dao.UserDao;
+import com.ilyass.admin.entity.Instructor;
 import com.ilyass.admin.entity.Role;
 import com.ilyass.admin.entity.User;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +23,20 @@ public class OperationUtility {
         updateRoles(roleDao);
         deleteRole(roleDao);
         fetchRole(roleDao);
+    }
+
+    public static void instructorsOperations(UserDao userDao,InstructorDao instructorDao,RoleDao roleDao) {
+        createInstructors(userDao,instructorDao,roleDao);
+    }
+
+    private static void createInstructors(UserDao userDao, InstructorDao instructorDao, RoleDao roleDao) {
+        Role role = roleDao.findByName("Instructor");
+        if (role == null) throw new EntityNotFoundException("Role not found");
+
+        User user1 = new User("InstructorUser1@gmail.com","pass1");
+        userDao.save(user1);
+        user1.assignRoleToUser(role);
+        Instructor instructor1 = new Instructor("Instructor1FN","Instructor1LN","Experienced Instructor",user1);
     }
 
     private static void fetchRole(RoleDao roleDao) {
