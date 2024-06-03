@@ -50,4 +50,8 @@ public class Role {
     public int hashCode() {
         return Objects.hash(roleId, name);
     }
+
+    public Role(String name) {
+        this.name = name;
+    }
 }
