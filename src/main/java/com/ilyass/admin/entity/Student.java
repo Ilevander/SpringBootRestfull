@@ -21,11 +21,11 @@ public class Student {
     private Long studentId;
 
     @Basic
-    @Column(name = "student_firstname",nullable = false,length = 45)
+    @Column(name = "first_name",nullable = false,length = 45)
     private String firstName;
 
     @Basic
-    @Column(name = "student_lastname",nullable = false,length = 45)
+    @Column(name = "last_name",nullable = false,length = 45)
     private String lastName;
 
     @Basic
