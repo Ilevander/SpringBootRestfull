@@ -1,8 +1,12 @@
 package com.ilyass.admin.utility;
 
+import com.ilyass.admin.dao.RoleDao;
 import com.ilyass.admin.dao.UserDao;
+import com.ilyass.admin.entity.Role;
 import com.ilyass.admin.entity.User;
 import jakarta.persistence.EntityNotFoundException;
+
+import java.util.List;
 
 public class OperationUtility {
     public static void usersOperations(UserDao userDao) {
@@ -11,6 +15,47 @@ public class OperationUtility {
         deleteUser(userDao);
         fetchUsers(userDao);
     }
+
+    public static void rolesOperations(RoleDao roleDao) {
+        createRoles(roleDao);
+        updateRoles(roleDao);
+        deleteRole(roleDao);
+        fetchRole(roleDao);
+    }
+
+    private static void fetchRole(RoleDao roleDao) {
+        roleDao.findAll().forEach(role-> System.out.println(role.toString()));
+    }
+
+    public static void assignRolesToUser(UserDao userDao, RoleDao roleDao) {
+        Role role = roleDao.findByName("Admin");
+        if (role != null) throw new EntityNotFoundException("Role Not Found");
+        List<User> users = userDao.findAll();
+        users.forEach(user -> {
+            user.assignRoleToUser(role);
+            userDao.save(user);
+        });
+    }
+
+    private static void deleteRole(RoleDao roleDao) {
+        roleDao.deleteById(2L);
+    }
+
+    private static void updateRoles(RoleDao roleDao) {
+        Role role = roleDao.findById(1L).orElseThrow(()->new EntityNotFoundException("Role not found"));
+        role.setName("NewAdmin");
+        roleDao.save(role);
+    }
+
+    private static void createRoles(RoleDao roleDao) {
+        Role role1 = new Role("Admin");
+        roleDao.save(role1);
+        Role role2 = new Role("Instructor");
+        roleDao.save(role2);
+        Role role3 = new Role("Student");
+        roleDao.save(role3);
+    }
+
 
     private static void createUsers(UserDao userDao) {
         User user1 = new User("user1@gmail.com","pass1");
