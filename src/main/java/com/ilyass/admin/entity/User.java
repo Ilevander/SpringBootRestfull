@@ -24,9 +24,22 @@ public class User {
     @Column(name = "user_id" , nullable = false)
     private Long userId;
 
-
+    @Basic
+    @Column(name = "email" , nullable = false, length = 45,unique = true)
     private String email;
+
+    @Basic
+    @Column(name = "password" , nullable = false, length = 45)
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
 
     @OneToOne(mappedBy = "user")
     private Instructor instructor;
@@ -34,13 +47,6 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Student student;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
