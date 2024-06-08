@@ -65,10 +65,10 @@ public class OperationUtility {
     private void createActivities(ActivityDao activityDao, InstructorDao instructorDao) {
         Instructor instructor = instructorDao.findById(1L).orElseThrow(()->new EntityNotFoundException("instructor Not Found"));
 
-        Activity activity1 = new Activity("Hibernate","7 Hours","Introduction to Hibernate",Instructor);
+        Activity activity1 = new Activity("Hibernate","7 Hours","Introduction to Hibernate",instructor);
         activityDao.save(activity1);
 
-        Activity activity2 = new Activity("Spring Boot","12 Hours","Master Spring Boot From Zero To Hero",Instructor);
+        Activity activity2 = new Activity("Spring Boot","12 Hours","Master Spring Boot From Zero To Hero",instructor);
         activityDao.save(activity2);
     }
 

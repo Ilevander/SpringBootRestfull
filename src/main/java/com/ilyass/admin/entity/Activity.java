@@ -80,4 +80,11 @@ public class Activity {
         this.students.remove(student);
         student.getActivities().remove(this);
     }
+
+    public Activity(String title, String activityDuration, String activityDescription ,Instructor instructor) {
+        this.title = title;
+        this.activityDuration = activityDuration;
+        this.activityDescription = activityDescription;
+        this.instructor = instructor;
+    }
 }
