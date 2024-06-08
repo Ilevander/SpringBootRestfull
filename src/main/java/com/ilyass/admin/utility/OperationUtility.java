@@ -5,6 +5,7 @@ import com.ilyass.admin.entity.*;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class OperationUtility {
     /**
@@ -55,10 +56,13 @@ public class OperationUtility {
      * ACTIVITY OPERATIONS
      * @param activityDao
      */
-    public static void activityOperations(UserDao userDao , ActivityDao activityDao, InstructorDao instructorDao) {
+    public static void activityOperations(UserDao userDao , ActivityDao activityDao, InstructorDao instructorDao, StudentDao studentDao) {
         createActivities(activityDao,instructorDao);
         updateActivities(activityDao);
         deleteActivity(activityDao);
+        fetchActivities(activityDao);
+        assignStudentsToActivities(activityDao, studentDao);
+        fetchActivitiesForStudent(activityDao);
     }
 
 
@@ -82,6 +86,24 @@ public class OperationUtility {
 
     private static void deleteActivity(ActivityDao activityDao) {
         activityDao.deleteById(2L);
+    }
+
+    private static void fetchActivities(ActivityDao activityDao) {
+        activityDao.findAll().forEach(activity -> System.out.println(activity.toString()));
+    }
+
+    private static void assignStudentsToActivities(ActivityDao activityDao, StudentDao studentDao) {
+        Optional<Student> student1 = studentDao.findById(1L);
+        Optional<Student> student2 = studentDao.findById(2L);
+        Activity activity = activityDao.findById(1L).orElseThrow(()->new EntityNotFoundException("Activity Not Found"));
+
+        student1.ifPresent(activity::assignStudentToActivity);
+        student2.ifPresent(activity::assignStudentToActivity);
+        activityDao.save(activity);
+    }
+
+    private static void fetchActivitiesForStudent(ActivityDao activityDao) {
+        activityDao.getActivitiesByStudentId(1L).forEach(activity -> System.out.println(activity.toString()));
     }
 
     private static void createStudent(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
