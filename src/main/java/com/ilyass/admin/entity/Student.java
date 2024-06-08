@@ -61,4 +61,11 @@ public class Student {
     public int hashCode() {
         return Objects.hash(studentId, firstName, lastName, level);
     }
+
+    public Student(String firstName, String lastName, String level, User user) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.level = level;
+        this.user = user;
+    }
 }
