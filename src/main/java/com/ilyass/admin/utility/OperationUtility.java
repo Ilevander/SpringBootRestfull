@@ -57,8 +57,10 @@ public class OperationUtility {
      */
     public void activityOperations(UserDao userDao , ActivityDao activityDao, InstructorDao instructorDao) {
         createActivities(activityDao,instructorDao);
-
+        updateActivities(activityDao);
+        deleteActivity(activityDao);
     }
+
 
     // IMPLEMENTATION AND PROCESS OF OPERATIONS
 
@@ -70,6 +72,16 @@ public class OperationUtility {
 
         Activity activity2 = new Activity("Spring Boot","12 Hours","Master Spring Boot From Zero To Hero",instructor);
         activityDao.save(activity2);
+    }
+
+    private void updateActivities(ActivityDao activityDao) {
+        Activity activity = activityDao.findById(1L).orElseThrow(()->new EntityNotFoundException("activity Not Found"));
+        activity.setActivityDuration("24 Hours");
+        activityDao.save(activity);
+    }
+
+    private void deleteActivity(ActivityDao activityDao) {
+        activityDao.deleteById(2L);
     }
 
     private void createStudent(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
