@@ -1,13 +1,7 @@
 package com.ilyass.admin.utility;
 
-import com.ilyass.admin.dao.InstructorDao;
-import com.ilyass.admin.dao.RoleDao;
-import com.ilyass.admin.dao.StudentDao;
-import com.ilyass.admin.dao.UserDao;
-import com.ilyass.admin.entity.Instructor;
-import com.ilyass.admin.entity.Role;
-import com.ilyass.admin.entity.Student;
-import com.ilyass.admin.entity.User;
+import com.ilyass.admin.dao.*;
+import com.ilyass.admin.entity.*;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
@@ -57,7 +51,26 @@ public class OperationUtility {
         fetchStudents(studentDao);
     }
 
+    /**
+     * ACTIVITY OPERATIONS
+     * @param activityDao
+     */
+    public void activityOperations(UserDao userDao , ActivityDao activityDao, InstructorDao instructorDao) {
+        createActivities(activityDao,instructorDao);
+
+    }
+
     // IMPLEMENTATION AND PROCESS OF OPERATIONS
+
+    private void createActivities(ActivityDao activityDao, InstructorDao instructorDao) {
+        Instructor instructor = instructorDao.findById(1L).orElseThrow(()->new EntityNotFoundException("instructor Not Found"));
+
+        Activity activity1 = new Activity("Hibernate","7 Hours","Introduction to Hibernate",Instructor);
+        activityDao.save(activity1);
+
+        Activity activity2 = new Activity("Spring Boot","12 Hours","Master Spring Boot From Zero To Hero",Instructor);
+        activityDao.save(activity2);
+    }
 
     private void createStudent(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
         Role role = roleDao.findByName("Student");
