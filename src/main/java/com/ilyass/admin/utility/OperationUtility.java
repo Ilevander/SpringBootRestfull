@@ -44,7 +44,7 @@ public class OperationUtility {
      * STUDENT OPERATIONS
      * @param studentDao
      */
-    public void studentOperations(UserDao userDao , StudentDao studentDao , RoleDao roleDao) {
+    public static void studentOperations(UserDao userDao , StudentDao studentDao , RoleDao roleDao) {
         createStudent(userDao , studentDao , roleDao);
         updateStudent(studentDao);
         removeStudent(studentDao);
@@ -55,7 +55,7 @@ public class OperationUtility {
      * ACTIVITY OPERATIONS
      * @param activityDao
      */
-    public void activityOperations(UserDao userDao , ActivityDao activityDao, InstructorDao instructorDao) {
+    public static void activityOperations(UserDao userDao , ActivityDao activityDao, InstructorDao instructorDao) {
         createActivities(activityDao,instructorDao);
         updateActivities(activityDao);
         deleteActivity(activityDao);
@@ -64,7 +64,7 @@ public class OperationUtility {
 
     // IMPLEMENTATION AND PROCESS OF OPERATIONS
 
-    private void createActivities(ActivityDao activityDao, InstructorDao instructorDao) {
+    private static void createActivities(ActivityDao activityDao, InstructorDao instructorDao) {
         Instructor instructor = instructorDao.findById(1L).orElseThrow(()->new EntityNotFoundException("instructor Not Found"));
 
         Activity activity1 = new Activity("Hibernate","7 Hours","Introduction to Hibernate",instructor);
@@ -74,17 +74,17 @@ public class OperationUtility {
         activityDao.save(activity2);
     }
 
-    private void updateActivities(ActivityDao activityDao) {
+    private static void updateActivities(ActivityDao activityDao) {
         Activity activity = activityDao.findById(1L).orElseThrow(()->new EntityNotFoundException("activity Not Found"));
         activity.setActivityDuration("24 Hours");
         activityDao.save(activity);
     }
 
-    private void deleteActivity(ActivityDao activityDao) {
+    private static void deleteActivity(ActivityDao activityDao) {
         activityDao.deleteById(2L);
     }
 
-    private void createStudent(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
+    private static void createStudent(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
         Role role = roleDao.findByName("Student");
         if (role == null) throw new EntityNotFoundException("Role not found");
 
@@ -108,18 +108,18 @@ public class OperationUtility {
 
     }
 
-    private void updateStudent(StudentDao studentDao) {
+    private static void updateStudent(StudentDao studentDao) {
         Student student = studentDao.findById(2L).orElseThrow(()->new EntityNotFoundException("Student not found"));
         student.setFirstName("updatedStdFN");
         student.setLastName("updatedStdLN");
         studentDao.save(student);
     }
 
-    private void removeStudent(StudentDao studentDao) {
+    private static void removeStudent(StudentDao studentDao) {
         studentDao.deleteById(1L);
     }
 
-    private void fetchStudents(StudentDao studentDao) {
+    private static void fetchStudents(StudentDao studentDao) {
         studentDao.findAll().forEach(student -> System.out.println(student.toString()));
     }
 
