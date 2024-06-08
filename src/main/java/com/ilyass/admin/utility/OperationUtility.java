@@ -52,9 +52,13 @@ public class OperationUtility {
      */
     public void studentOperations(UserDao userDao , StudentDao studentDao , RoleDao roleDao) {
         createStudent(userDao , studentDao , roleDao);
+        updateStudent(studentDao);
+        removeStudent(studentDao);
+        fetchStudents(studentDao);
     }
 
     // IMPLEMENTATION AND PROCESS OF OPERATIONS
+
     private void createStudent(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
         Role role = roleDao.findByName("Student");
         if (role == null) throw new EntityNotFoundException("Role not found");
@@ -64,6 +68,34 @@ public class OperationUtility {
         user1.assignRoleToUser(role);
         Student student1 = new Student("student1FN","student1LN","master",user1);
         studentDao.save(student1);
+
+        User user2 = new User("stdUser1@gmail.com","pass2");
+        userDao.save(user2);
+        user2.assignRoleToUser(role);
+        Student student2 = new Student("student1FN","student1LN","Phd",user2);
+        studentDao.save(student2);
+
+        User user3 = new User("stdUser1@gmail.com","pass3");
+        userDao.save(user3);
+        user3.assignRoleToUser(role);
+        Student student3 = new Student("student1FN","student1LN","BTS",user3);
+        studentDao.save(student3);
+
+    }
+
+    private void updateStudent(StudentDao studentDao) {
+        Student student = studentDao.findById(2L).orElseThrow(()->new EntityNotFoundException("Student not found"));
+        student.setFirstName("updatedStdFN");
+        student.setLastName("updatedStdLN");
+        studentDao.save(student);
+    }
+
+    private void removeStudent(StudentDao studentDao) {
+        studentDao.deleteById(1L);
+    }
+
+    private void fetchStudents(StudentDao studentDao) {
+        studentDao.findAll().forEach(student -> System.out.println(student.toString()));
     }
 
     private static void fetchInstructors(InstructorDao instructorDao) {
