@@ -2,15 +2,21 @@ package com.ilyass.admin.utility;
 
 import com.ilyass.admin.dao.InstructorDao;
 import com.ilyass.admin.dao.RoleDao;
+import com.ilyass.admin.dao.StudentDao;
 import com.ilyass.admin.dao.UserDao;
 import com.ilyass.admin.entity.Instructor;
 import com.ilyass.admin.entity.Role;
+import com.ilyass.admin.entity.Student;
 import com.ilyass.admin.entity.User;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 
 public class OperationUtility {
+    /**
+     * USER OPERATIONS
+     * @param userDao
+     */
     public static void usersOperations(UserDao userDao) {
         createUsers(userDao);
         updateUser(userDao);
@@ -18,6 +24,10 @@ public class OperationUtility {
         fetchUsers(userDao);
     }
 
+    /**
+     * ROLE OPERATIONS
+     * @param roleDao
+     */
     public static void rolesOperations(RoleDao roleDao) {
         createRoles(roleDao);
         updateRoles(roleDao);
@@ -25,11 +35,35 @@ public class OperationUtility {
         fetchRole(roleDao);
     }
 
+    /**
+     * INSTRUCTOR OPERATIONS
+     * @param instructorDao
+     */
     public static void instructorsOperations(UserDao userDao,InstructorDao instructorDao,RoleDao roleDao) {
         createInstructors(userDao,instructorDao,roleDao);
         updateInstructor(instructorDao);
         removeInstructor(instructorDao);
         fetchInstructors(instructorDao);
+    }
+
+    /**
+     * STUDENT OPERATIONS
+     * @param studentDao
+     */
+    public void studentOperations(UserDao userDao , StudentDao studentDao , RoleDao roleDao) {
+        createStudent(userDao , studentDao , roleDao);
+    }
+
+    // IMPLEMENTATION AND PROCESS OF OPERATIONS
+    private void createStudent(UserDao userDao, StudentDao studentDao, RoleDao roleDao) {
+        Role role = roleDao.findByName("Student");
+        if (role == null) throw new EntityNotFoundException("Role not found");
+
+        User user1 = new User("stdUser1@gmail.com","pass1");
+        userDao.save(user1);
+        user1.assignRoleToUser(role);
+        Student student1 = new Student("student1FN","student1LN","master",user1);
+        studentDao.save(student1);
     }
 
     private static void fetchInstructors(InstructorDao instructorDao) {
