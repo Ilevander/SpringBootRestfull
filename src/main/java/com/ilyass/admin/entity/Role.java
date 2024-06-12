@@ -1,12 +1,8 @@
 package com.ilyass.admin.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -21,21 +17,15 @@ import java.util.Set;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id",nullable = false)
+    @Column(name = "role_id", nullable = false)
     private Long roleId;
 
     @Basic
-    @Column(name = "name",nullable = false, length = 45,unique = true)
+    @Column(name = "name", nullable = false, length = 45, unique = true)
     private String name;
 
-
-    //Many Roles could be attached to many Users
+    // Many Roles could be attached to many Users
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
     private Set<User> users = new HashSet<>();
 
     @Override

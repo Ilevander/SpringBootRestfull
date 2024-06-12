@@ -1,8 +1,8 @@
 package com.ilyass.admin.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -35,11 +35,6 @@ public class Student {
 
     //Group of students could have Many activities
     @ManyToMany(mappedBy = "students" , fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "enrolled_in",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "activity_id")
-    )
     private Set<Activity> activities = new HashSet<>();
 
 

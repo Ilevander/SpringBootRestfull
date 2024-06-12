@@ -2,8 +2,8 @@ package com.ilyass.admin.utility;
 
 import com.ilyass.admin.dao.*;
 import com.ilyass.admin.entity.*;
-import jakarta.persistence.EntityNotFoundException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,8 +1,8 @@
 package com.ilyass.admin.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -88,3 +88,4 @@ public class Activity {
         this.instructor = instructor;
     }
 }
+
