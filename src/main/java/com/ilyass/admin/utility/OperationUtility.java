@@ -13,10 +13,10 @@ public class OperationUtility {
      * @param userDao
      */
     public static void usersOperations(UserDao userDao) {
-        //createUsers(userDao);
+        createUsers(userDao);
         //updateUser(userDao);
         //deleteUser(userDao);
-        fetchUsers(userDao);
+        //fetchUsers(userDao);
     }
 
     /**
@@ -25,9 +25,9 @@ public class OperationUtility {
      */
     public static void rolesOperations(RoleDao roleDao) {
         createRoles(roleDao);
-        updateRoles(roleDao);
-        deleteRole(roleDao);
-        fetchRole(roleDao);
+        //updateRoles(roleDao);
+        //deleteRole(roleDao);
+        //fetchRole(roleDao);
     }
 
     /**
