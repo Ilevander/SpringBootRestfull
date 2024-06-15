@@ -35,10 +35,10 @@ public class OperationUtility {
      * @param instructorDao
      */
     public static void instructorsOperations(UserDao userDao,InstructorDao instructorDao,RoleDao roleDao) {
-        //createInstructors(userDao,instructorDao,roleDao);
+        createInstructors(userDao,instructorDao,roleDao);
         //updateInstructor(instructorDao);
         //removeInstructor(instructorDao);
-        fetchInstructors(instructorDao);
+        //fetchInstructors(instructorDao);
     }
 
     /**
@@ -46,9 +46,9 @@ public class OperationUtility {
      * @param studentDao
      */
     public static void studentOperations(UserDao userDao , StudentDao studentDao , RoleDao roleDao) {
-        createStudent(userDao , studentDao , roleDao);
-        updateStudent(studentDao);
-        removeStudent(studentDao);
+        //createStudent(userDao , studentDao , roleDao);
+        //updateStudent(studentDao);
+        //removeStudent(studentDao);
         fetchStudents(studentDao);
     }
 
@@ -116,16 +116,16 @@ public class OperationUtility {
         Student student1 = new Student("student1FN","student1LN","master",user1);
         studentDao.save(student1);
 
-        User user2 = new User("stdUser1@gmail.com","pass2");
+        User user2 = new User("stdUser2@gmail.com","pass2");
         userDao.save(user2);
         user2.assignRoleToUser(role);
-        Student student2 = new Student("student1FN","student1LN","Phd",user2);
+        Student student2 = new Student("student2FN","student2LN","Phd",user2);
         studentDao.save(student2);
 
-        User user3 = new User("stdUser1@gmail.com","pass3");
+        User user3 = new User("stdUser3@gmail.com","pass3");
         userDao.save(user3);
         user3.assignRoleToUser(role);
-        Student student3 = new Student("student1FN","student1LN","BTS",user3);
+        Student student3 = new Student("student3FN","student3LN","BTS",user3);
         studentDao.save(student3);
 
     }
