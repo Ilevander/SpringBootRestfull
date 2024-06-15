@@ -25,11 +25,9 @@ public class SpringBootRestfullApplication implements CommandLineRunner {
     @Autowired
     private RoleDao roleDao;
 
-
     public static void main(String[] args) {
         SpringApplication.run(SpringBootRestfullApplication.class, args);
     }
-
     /**
      * To Test Operation Utilities for All Entities
      * @param args
@@ -37,8 +35,9 @@ public class SpringBootRestfullApplication implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        OperationUtility.usersOperations(userDao);
-        OperationUtility.rolesOperations(roleDao);
-        OperationUtility.assignRolesToUser(userDao,roleDao);
+        //OperationUtility.usersOperations(userDao);
+        //OperationUtility.rolesOperations(roleDao);
+        //OperationUtility.assignRolesToUser(userDao,roleDao);
+        OperationUtility.instructorsOperations(userDao,instructorDao,roleDao);
     }
 }

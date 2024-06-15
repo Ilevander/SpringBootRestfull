@@ -35,9 +35,9 @@ public class OperationUtility {
      * @param instructorDao
      */
     public static void instructorsOperations(UserDao userDao,InstructorDao instructorDao,RoleDao roleDao) {
-        createInstructors(userDao,instructorDao,roleDao);
-        updateInstructor(instructorDao);
-        removeInstructor(instructorDao);
+        //createInstructors(userDao,instructorDao,roleDao);
+        //updateInstructor(instructorDao);
+        //removeInstructor(instructorDao);
         fetchInstructors(instructorDao);
     }
 
@@ -164,16 +164,22 @@ public class OperationUtility {
         if (role == null) throw new EntityNotFoundException("Role not found");
 
         User user1 = new User("InstructorUser1@gmail.com","pass1");
-        userDao.save(user1);
         user1.assignRoleToUser(role);
+        userDao.save(user1);
         Instructor instructor1 = new Instructor("Instructor1FN","Instructor1LN","Experienced Instructor",user1);
         instructorDao.save(instructor1);
 
         User user2 = new User("InstructorUser2@gmail.com","pass2");
+        user2.assignRoleToUser(role);
         userDao.save(user2);
-        user1.assignRoleToUser(role);
         Instructor instructor2 = new Instructor("Instructor2FN","Instructor2LN","Senior Instructor",user2);
         instructorDao.save(instructor2);
+
+        User user3 = new User("InstructorUser3@gmail.com","pass3");
+        user3.assignRoleToUser(role);
+        userDao.save(user3);
+        Instructor instructor3 = new Instructor("Instructor3FN","Instructor3LN","Senior Instructor",user3);
+        instructorDao.save(instructor3);
     }
 
     private static void fetchRole(RoleDao roleDao) {
