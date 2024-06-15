@@ -128,7 +128,6 @@ public class OperationUtility {
         user3.assignRoleToUser(role);
         Student student3 = new Student("student3FN","student3LN","BTS",user3);
         studentDao.save(student3);
-
     }
 
     private static void updateStudent(StudentDao studentDao) {
