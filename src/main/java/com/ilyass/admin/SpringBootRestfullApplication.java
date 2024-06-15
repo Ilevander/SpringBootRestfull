@@ -8,22 +8,22 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootRestfullApplication implements CommandLineRunner {
+public class SpringBootRestfullApplication {
 
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private ActivityDao activityDao;
-
-    @Autowired
-    private InstructorDao instructorDao;
-
-    @Autowired
-    private StudentDao studentDao;
-
-    @Autowired
-    private RoleDao roleDao;
+//    @Autowired
+//    private UserDao userDao;
+//
+//    @Autowired
+//    private ActivityDao activityDao;
+//
+//    @Autowired
+//    private InstructorDao instructorDao;
+//
+//    @Autowired
+//    private StudentDao studentDao;
+//
+//    @Autowired
+//    private RoleDao roleDao;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootRestfullApplication.class, args);
@@ -33,13 +33,13 @@ public class SpringBootRestfullApplication implements CommandLineRunner {
      * @param args
      * @throws Exception
      */
-    @Override
-    public void run(String... args) throws Exception {
-//        OperationUtility.usersOperations(userDao);
-//        OperationUtility.rolesOperations(roleDao);
-//        OperationUtility.assignRolesToUser(userDao,roleDao);
-//        OperationUtility.instructorsOperations(userDao,instructorDao,roleDao);
-//        OperationUtility.studentOperations(userDao,studentDao,roleDao);
-        OperationUtility.activityOperations(activityDao,instructorDao,studentDao);
-    }
+//    @Override
+//    public void run(String... args) throws Exception {
+////        OperationUtility.usersOperations(userDao);
+////        OperationUtility.rolesOperations(roleDao);
+////        OperationUtility.assignRolesToUser(userDao,roleDao);
+////        OperationUtility.instructorsOperations(userDao,instructorDao,roleDao);
+////        OperationUtility.studentOperations(userDao,studentDao,roleDao);
+////        OperationUtility.activityOperations(activityDao,instructorDao,studentDao);
+//    }
 }
