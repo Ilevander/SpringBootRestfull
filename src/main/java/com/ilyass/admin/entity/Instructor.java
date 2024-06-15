@@ -63,4 +63,15 @@ public class Instructor {
         this.summary = summary;
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Instructor{" +
+                "instructorId=" + instructorId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", summary='" + summary + '\'' +
+                ", user=" + (user != null ? "User{id=" + user.getUserId() + "}" : "null") +
+                '}';
+    }
 }

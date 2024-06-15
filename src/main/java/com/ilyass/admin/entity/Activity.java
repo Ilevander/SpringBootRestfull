@@ -87,5 +87,27 @@ public class Activity {
         this.activityDescription = activityDescription;
         this.instructor = instructor;
     }
+    public Activity(String title, String semester, String subject, String classGroup, String activityDescription, String activityDuration, Instructor instructor) {
+        this.title = title;
+        this.semester = semester;
+        this.subject = subject;
+        this.classGroup = classGroup;
+        this.activityDescription = activityDescription;
+        this.activityDuration = activityDuration;
+        this.instructor = instructor;
+    }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "activityId=" + activityId +
+                ", title='" + title + '\'' +
+                ", semester='" + semester + '\'' +
+                ", subject='" + subject + '\'' +
+                ", classGroup='" + classGroup + '\'' +
+                ", activityDescription='" + activityDescription + '\'' +
+                ", activityDuration='" + activityDuration + '\'' +
+                '}';
+    }
 }
 

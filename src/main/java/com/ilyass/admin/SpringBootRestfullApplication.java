@@ -39,6 +39,7 @@ public class SpringBootRestfullApplication implements CommandLineRunner {
 //        OperationUtility.rolesOperations(roleDao);
 //        OperationUtility.assignRolesToUser(userDao,roleDao);
 //        OperationUtility.instructorsOperations(userDao,instructorDao,roleDao);
-        OperationUtility.studentOperations(userDao,studentDao,roleDao);
+//        OperationUtility.studentOperations(userDao,studentDao,roleDao);
+        OperationUtility.activityOperations(activityDao,instructorDao,studentDao);
     }
 }

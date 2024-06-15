@@ -46,22 +46,22 @@ public class OperationUtility {
      * @param studentDao
      */
     public static void studentOperations(UserDao userDao , StudentDao studentDao , RoleDao roleDao) {
-        //createStudent(userDao , studentDao , roleDao);
+        createStudent(userDao , studentDao , roleDao);
         //updateStudent(studentDao);
         //removeStudent(studentDao);
-        fetchStudents(studentDao);
+        //fetchStudents(studentDao);
     }
 
     /**
      * ACTIVITY OPERATIONS
      * @param activityDao
      */
-    public static void activityOperations(UserDao userDao , ActivityDao activityDao, InstructorDao instructorDao, StudentDao studentDao) {
-        createActivities(activityDao,instructorDao);
-        updateActivities(activityDao);
-        deleteActivity(activityDao);
-        fetchActivities(activityDao);
-        assignStudentsToActivities(activityDao, studentDao);
+    public static void activityOperations(ActivityDao activityDao, InstructorDao instructorDao, StudentDao studentDao) {
+//        createActivities(activityDao,instructorDao);
+//        updateActivities(activityDao);
+//        deleteActivity(activityDao);
+//        fetchActivities(activityDao);
+//        assignStudentsToActivities(activityDao, studentDao);
         fetchActivitiesForStudent(activityDao);
     }
 
@@ -69,14 +69,15 @@ public class OperationUtility {
     // IMPLEMENTATION AND PROCESS OF OPERATIONS
 
     private static void createActivities(ActivityDao activityDao, InstructorDao instructorDao) {
-        Instructor instructor = instructorDao.findById(1L).orElseThrow(()->new EntityNotFoundException("instructor Not Found"));
+        Instructor instructor = instructorDao.findById(1L).orElseThrow(() -> new EntityNotFoundException("Instructor Not Found"));
 
-        Activity activity1 = new Activity("Hibernate","7 Hours","Introduction to Hibernate",instructor);
+        Activity activity1 = new Activity("Hibernate", "Fall 2024", "Database", "Group A", "Introduction to Hibernate", "7 Hours", instructor);
         activityDao.save(activity1);
 
-        Activity activity2 = new Activity("Spring Boot","12 Hours","Master Spring Boot From Zero To Hero",instructor);
+        Activity activity2 = new Activity("Spring Boot", "Spring 2024", "Software Development", "Group B", "Master Spring Boot From Zero To Hero", "12 Hours", instructor);
         activityDao.save(activity2);
     }
+
 
     private static void updateActivities(ActivityDao activityDao) {
         Activity activity = activityDao.findById(1L).orElseThrow(()->new EntityNotFoundException("activity Not Found"));

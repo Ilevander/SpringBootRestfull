@@ -10,6 +10,7 @@ import java.util.List;
 public interface ActivityDao extends JpaRepository<Activity,Long> {
     List<Activity> findActivitiesByTitleContains(String keyword);
 
-    @Query(value = "select * from activities as a where a.activity_id in (select e.enrolled_in as e where e.student_id=:studentId)",nativeQuery = true)
+    @Query(value = "SELECT * FROM activities a WHERE a.activity_id IN (SELECT e.activity_id FROM enrolled_in e WHERE e.student_id = :studentId)", nativeQuery = true)
     List<Activity> getActivitiesByStudentId(@Param("studentId") Long studentId);
+
 }

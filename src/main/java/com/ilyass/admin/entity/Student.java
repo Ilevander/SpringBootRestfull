@@ -63,4 +63,15 @@ public class Student {
         this.level = level;
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentId=" + studentId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", level='" + level + '\'' +
+                ", user=" + (user != null ? "User{id=" + user.getUserId() + "}" : "null") +
+                '}';
+    }
 }
