@@ -182,7 +182,7 @@ public class OperationUtility {
 
     public static void assignRolesToUser(UserDao userDao, RoleDao roleDao) {
         Role role = roleDao.findByName("Admin");
-        if (role != null) throw new EntityNotFoundException("Role Not Found");
+        if (role == null) throw new EntityNotFoundException("Role Not Found");
         List<User> users = userDao.findAll();
         users.forEach(user -> {
             user.assignRoleToUser(role);

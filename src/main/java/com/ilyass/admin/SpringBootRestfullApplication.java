@@ -39,5 +39,6 @@ public class SpringBootRestfullApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         OperationUtility.usersOperations(userDao);
         OperationUtility.rolesOperations(roleDao);
+        OperationUtility.assignRolesToUser(userDao,roleDao);
     }
 }
