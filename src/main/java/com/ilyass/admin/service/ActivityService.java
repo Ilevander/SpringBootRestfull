@@ -10,7 +10,7 @@ public interface ActivityService {
     ActivityDTO updateActivity(ActivityDTO activityDTO);
     Page<ActivityDTO> findActivitiesByActivityName(String keyword, int page, int size);
     void assignStudentToActivity(Long activityId, Long studentId);
-    Page<ActivityDTO> fetchActivitiesForStudent(Long studentId, int page, int size);
+    Page<ActivityDTO> fetchActivitiesForStudent(Long activityId, int page, int size);
     Page<ActivityDTO> fetchNonEnrolledInActivitiesForStudent(Long studentId, int page, int size);
     void deleteActivity(Long activityId);
     Page<ActivityDTO> fetchActivitiesForInstructor(Long instructorId, int page, int size);

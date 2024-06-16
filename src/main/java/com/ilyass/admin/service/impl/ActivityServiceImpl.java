@@ -77,8 +77,10 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Page<ActivityDTO> fetchActivitiesForStudent(Long studentId, int page, int size) {
-        return null;
-    }
+           PageRequest pageRequest = PageRequest.of(page,size);
+           Page<Activity> studentActivitiesPage = activityDao.getActivitiesByStudentId(studentId,pageRequest);
+           return new PageImpl<>(studentActivitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()));
+
 
     @Override
     public Page<ActivityDTO> fetchNonEnrolledInActivitiesForStudent(Long studentId, int page, int size) {
