@@ -77,23 +77,27 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Page<ActivityDTO> fetchActivitiesForStudent(Long studentId, int page, int size) {
-           PageRequest pageRequest = PageRequest.of(page,size);
-           Page<Activity> studentActivitiesPage = activityDao.getActivitiesByStudentId(studentId,pageRequest);
-           return new PageImpl<>(studentActivitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()));
-
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Activity> studentActivitiesPage = activityDao.getActivitiesByStudentId(studentId, pageRequest);
+        return new PageImpl<>(studentActivitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()));
+    }
 
     @Override
     public Page<ActivityDTO> fetchNonEnrolledInActivitiesForStudent(Long studentId, int page, int size) {
-        return null;
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Activity> nonEnrolledInActivitiesPage = activityDao.getNonEnrolledInActivitiesByStudentId(studentId, pageRequest);
+        return new PageImpl<>(nonEnrolledInActivitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()), pageRequest, nonEnrolledInActivitiesPage.getTotalElements());
     }
 
     @Override
     public void deleteActivity(Long activityId) {
-
+         activityDao.deleteById(activityId);
     }
 
     @Override
     public Page<ActivityDTO> fetchActivitiesForInstructor(Long instructorId, int page, int size) {
-        return null;
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page <Activity> instructorActivitiesPage = activityDao.getActivitiesByInstructorId(instructorId, pageRequest);
+        return new PageImpl<>(instructorActivitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()), pageRequest, instructorActivitiesPage.getTotalElements());
     }
 }
