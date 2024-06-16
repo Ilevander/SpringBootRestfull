@@ -2,9 +2,11 @@ package com.ilyass.admin.service.impl;
 
 import com.ilyass.admin.dao.InstructorDao;
 import com.ilyass.admin.dto.InstructorDTO;
+import com.ilyass.admin.entity.Activity;
 import com.ilyass.admin.entity.Instructor;
 import com.ilyass.admin.entity.User;
 import com.ilyass.admin.mapper.InstructorMapper;
+import com.ilyass.admin.service.ActivityService;
 import com.ilyass.admin.service.InstructorService;
 import com.ilyass.admin.service.UserService;
 import org.springframework.data.domain.Page;
@@ -17,14 +19,16 @@ import java.util.stream.Collectors;
 
 public class InstructorServiceImpl implements InstructorService {
 
-    private InstructorDao instructorDao;
-    private InstructorMapper instructorMapper;
-    private UserService userService;
+    private final InstructorDao instructorDao;
+    private final InstructorMapper instructorMapper;
+    private final UserService userService;
+    private ActivityService activityService;
 
-    public InstructorServiceImpl(InstructorDao instructorDao, InstructorMapper instructorMapper, UserService userService) {
+    public InstructorServiceImpl(InstructorDao instructorDao, InstructorMapper instructorMapper, UserService userService, ActivityService activityService) {
         this.instructorDao = instructorDao;
         this.instructorMapper = instructorMapper;
         this.userService = userService;
+        this.activityService = activityService;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class InstructorServiceImpl implements InstructorService {
     public Page<InstructorDTO> findInstructorByName(String name, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Instructor> instructorsPage = instructorDao.findInstructorsByName(name, pageRequest);
-        return new PageImpl<>(instructorsPage.getContent().stream().map(instructor -> instructorMapper.fromInstructor(instructor)).collect(Collectors.toList()),pageRequest, instructorsPage.getTotalElements());
+        return new PageImpl<>(instructorsPage.getContent().stream().map(instructorMapper::fromInstructor).collect(Collectors.toList()),pageRequest, instructorsPage.getTotalElements());
 
     }
 
@@ -57,16 +61,25 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public InstructorDTO updateInstructor(InstructorDTO instructorDTO) {
-        return null;
+        Instructor loadedInstructor = loadInstructorById(instructorDTO.getInstructorId());
+        Instructor instructor = instructorMapper.fromInstructorDTO(instructorDTO);
+        instructor.setUser(loadedInstructor.getUser());
+        instructor.setActivities(loadedInstructor.getActivities());
+        Instructor updatedInstructor = instructorDao.save(instructor);
+        return instructorMapper.fromInstructor(updatedInstructor);
     }
 
     @Override
     public List<InstructorDTO> fetchInstructors() {
-        return List.of();
+        return instructorDao.findAll().stream().map(instructorMapper::fromInstructor).collect(Collectors.toList());
     }
 
     @Override
     public void removeInstructor(Long instructorId) {
-
+        Instructor instructor = loadInstructorById(instructorId);
+        for(Activity activity : instructor.getActivities()) {
+            activityService.deleteActivity(activity.getActivityId());
+        }
+        instructorDao.deleteById(instructorId);
     }
 }
