@@ -2,11 +2,9 @@ package com.ilyass.admin.runner;
 
 import com.ilyass.admin.dto.ActivityDTO;
 import com.ilyass.admin.dto.InstructorDTO;
+import com.ilyass.admin.dto.StudentDTO;
 import com.ilyass.admin.dto.UserDTO;
-import com.ilyass.admin.service.ActivityService;
-import com.ilyass.admin.service.InstructorService;
-import com.ilyass.admin.service.RoleService;
-import com.ilyass.admin.service.UserService;
+import com.ilyass.admin.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,29 +14,34 @@ import java.util.Arrays;
 @Component
 public class MyRunner implements CommandLineRunner {
 
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
+    private final UserService userService;
+    private final InstructorService instructorService;
+    private final ActivityService activityService;
+    private final StudentService studentService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private InstructorService instructorService;
-
-    @Autowired
-    private ActivityService activityService;
+    public MyRunner(RoleService roleService, UserService userService, InstructorService instructorService,
+                    ActivityService activityService, StudentService studentService) {
+        this.roleService = roleService;
+        this.userService = userService;
+        this.instructorService = instructorService;
+        this.activityService = activityService;
+        this.studentService = studentService;
+    }
 
     @Override
     public void run(String... args) throws Exception {
         createRoles();
         createAdmin();
         createInstructors();
-        createActivity();
+        createActivities();
+        StudentDTO student = createStudent();
+        assignCourseToStudent(student);
     }
 
-
     private void createRoles() {
-        Arrays.asList("Admin","Instructor","Student").forEach(role-> roleService.createRole(role));
+        Arrays.asList("Admin", "Instructor", "Student").forEach(roleService::createRole);
     }
 
     private void createAdmin() {
@@ -60,7 +63,7 @@ public class MyRunner implements CommandLineRunner {
         }
     }
 
-    private void createActivity() {
+    private void createActivities() {
         for (int i = 0; i < 20; i++) {
             ActivityDTO activityDTO = new ActivityDTO();
             activityDTO.setActivityDescription("Java" + i);
@@ -73,5 +76,21 @@ public class MyRunner implements CommandLineRunner {
             activityDTO.setInstructor(instructorDTO);
             activityService.createActivity(activityDTO);
         }
+    }
+
+    private StudentDTO createStudent() {
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setFirstName("studentFN");
+        studentDTO.setLastName("studentLN");
+        studentDTO.setLevel("intermediate");
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail("student@gmail.com");
+        userDTO.setPassword("1234");
+        studentDTO.setUser(userDTO);
+        return studentService.createStudent(studentDTO);
+    }
+
+    private void assignCourseToStudent(StudentDTO student) {
+        activityService.assignStudentToActivity(1L, student.getStudentId());
     }
 }
