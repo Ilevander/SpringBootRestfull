@@ -74,9 +74,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void removeStudent(Long studentId) {
         Student student = loadStudentById(studentId);
-        Iterator<Activity> courseIterator = student.getActivities().iterator();
-        if (courseIterator.hasNext()) {
-            Activity activity = courseIterator.next();
+        Iterator<Activity> activityIterator = student.getActivities().iterator();
+        if (activityIterator.hasNext()) {
+            Activity activity = activityIterator.next();
             activity.removeStudentFromActivity(student);
         }
         studentDao.deleteById(studentId);
