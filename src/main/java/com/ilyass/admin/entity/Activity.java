@@ -11,48 +11,41 @@ import java.util.Set;
 @Table(name = "activities")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "activity_id" , nullable = false)
+    @Column(name = "activity_id", nullable = false)
     private Long activityId;
 
     @Basic
-    @Column(name = "activity_title",nullable = false,length = 45)
-    private String title;
+    @Column(name = "activity_name", nullable = false, length = 45)
+    private String activityName;
 
     @Basic
-    @Column(name = "activity_semester",nullable = false,length = 45)
-    private String semester;
+    @Column(name = "activity_duration", nullable = false, length = 45)
+    private String activityDuration;
 
     @Basic
-    @Column(name = "activity_subject",nullable = false,length = 45)
-    private String subject;
-
-    @Basic
-    @Column(name = "activity_classGroup",nullable = false,length = 45)
-    private String classGroup;
-
-    @Basic
-    @Column(name = "activity_description",nullable = false,length = 64)
+    @Column(name = "activity_description", nullable = false, length = 255)
     private String activityDescription;
 
     @Basic
-    @Column(name = "activity_duration",nullable = false,length = 45)
-    private String activityDuration;
+    @Column(name = "class_group", nullable = false, length = 45)
+    private String classGroup;
 
-    //Many activities belong to one instructor
+    @Basic
+    @Column(name = "semester", nullable = false, length = 45)
+    private String semester;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "instructor_id",referencedColumnName = "instructor_id")
+    @JoinColumn(name = "instructor_id", referencedColumnName = "instructor_id", nullable = false)
     private Instructor instructor;
 
-    //Many activities belong to Many students
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "enrolled_in",
+            name = "enrolled_in", // Ensure this table exists in your database
             joinColumns = @JoinColumn(name = "activity_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
@@ -63,12 +56,17 @@ public class Activity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Activity activity = (Activity) o;
-        return Objects.equals(activityId, activity.activityId) && Objects.equals(title, activity.title) && Objects.equals(semester, activity.semester) && Objects.equals(subject, activity.subject) && Objects.equals(classGroup, activity.classGroup) && Objects.equals(activityDescription, activity.activityDescription) && Objects.equals(activityDuration, activity.activityDuration);
+        return Objects.equals(activityId, activity.activityId) &&
+                Objects.equals(activityName, activity.activityName) &&
+                Objects.equals(activityDuration, activity.activityDuration) &&
+                Objects.equals(activityDescription, activity.activityDescription) &&
+                Objects.equals(classGroup, activity.classGroup) &&
+                Objects.equals(semester, activity.semester);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(activityId, title, semester, subject, classGroup, activityDescription, activityDuration);
+        return Objects.hash(activityId, activityName, activityDuration, activityDescription, classGroup, semester);
     }
 
     public void assignStudentToActivity(Student student) {
@@ -80,34 +78,4 @@ public class Activity {
         this.students.remove(student);
         student.getActivities().remove(this);
     }
-
-    public Activity(String title, String activityDuration, String activityDescription ,Instructor instructor) {
-        this.title = title;
-        this.activityDuration = activityDuration;
-        this.activityDescription = activityDescription;
-        this.instructor = instructor;
-    }
-    public Activity(String title, String semester, String subject, String classGroup, String activityDescription, String activityDuration, Instructor instructor) {
-        this.title = title;
-        this.semester = semester;
-        this.subject = subject;
-        this.classGroup = classGroup;
-        this.activityDescription = activityDescription;
-        this.activityDuration = activityDuration;
-        this.instructor = instructor;
-    }
-
-    @Override
-    public String toString() {
-        return "Activity{" +
-                "activityId=" + activityId +
-                ", title='" + title + '\'' +
-                ", semester='" + semester + '\'' +
-                ", subject='" + subject + '\'' +
-                ", classGroup='" + classGroup + '\'' +
-                ", activityDescription='" + activityDescription + '\'' +
-                ", activityDuration='" + activityDuration + '\'' +
-                '}';
-    }
 }
-

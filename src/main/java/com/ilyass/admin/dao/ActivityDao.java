@@ -7,18 +7,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+public interface ActivityDao extends JpaRepository<Activity, Long> {
 
-public interface ActivityDao extends JpaRepository<Activity,Long> {
-        Page<Activity> findActivitiesByTitleContains(String keyword , Pageable pageable);
+    // Update to use the correct field name in the Activity entity
+    Page<Activity> findActivitiesByActivityNameContains(String keyword, Pageable pageable);
 
     @Query(value = "SELECT * FROM activities a WHERE a.activity_id IN (SELECT e.activity_id FROM enrolled_in e WHERE e.student_id = :studentId)", nativeQuery = true)
-    Page<Activity> getActivitiesByStudentId(@Param("studentId") Long studentId , Pageable pageable);
+    Page<Activity> getActivitiesByStudentId(@Param("studentId") Long studentId, Pageable pageable);
 
-    @Query(value = "select * from activities where activity_id not in (select e.activity_id from enrolled_in as e where e.student_id=:studentId)", nativeQuery = true)
+    @Query(value = "SELECT * FROM activities a WHERE a.activity_id NOT IN (SELECT e.activity_id FROM enrolled_in e WHERE e.student_id = :studentId)", nativeQuery = true)
     Page<Activity> getNonEnrolledInActivitiesByStudentId(@Param("studentId") Long studentId, Pageable pageable);
 
-    @Query(value = "select c from Activity as c where c.instructor.instructorId=:instructorId")
+    @Query(value = "SELECT c FROM Activity c WHERE c.instructor.instructorId = :instructorId")
     Page<Activity> getActivitiesByInstructorId(@Param("instructorId") Long instructorId, Pageable pageable);
-
 }

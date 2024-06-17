@@ -26,7 +26,7 @@ public class InstructorServiceImpl implements InstructorService {
     private final InstructorDao instructorDao;
     private final InstructorMapper instructorMapper;
     private final UserService userService;
-    private ActivityService activityService;
+    private final ActivityService activityService;
 
     public InstructorServiceImpl(InstructorDao instructorDao, InstructorMapper instructorMapper, UserService userService, ActivityService activityService) {
         this.instructorDao = instructorDao;

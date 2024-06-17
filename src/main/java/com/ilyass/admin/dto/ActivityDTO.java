@@ -5,6 +5,8 @@ public class ActivityDTO {
     private String activityName;
     private String activityDuration;
     private String activityDescription;
+    private String classGroup;  // Added this field
+    private String semester;    // Added this field
     private InstructorDTO instructor;
 
     public Long getActivityId() {
@@ -37,6 +39,22 @@ public class ActivityDTO {
 
     public void setActivityDescription(String activityDescription) {
         this.activityDescription = activityDescription;
+    }
+
+    public String getClassGroup() {
+        return classGroup;
+    }
+
+    public void setClassGroup(String classGroup) {
+        this.classGroup = classGroup;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
     }
 
     public InstructorDTO getInstructor() {

@@ -64,7 +64,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public Page<ActivityDTO> findActivitiesByActivityName(String keyword, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page,size);
-        Page<Activity> activityPage = activityDao.findActivitiesByTitleContains(keyword,pageRequest);
+        Page<Activity> activityPage = activityDao.findActivitiesByActivityNameContains(keyword,pageRequest);
         return new PageImpl<>(activityPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()));
     }
 
