@@ -9,6 +9,8 @@ import com.ilyass.admin.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/students")
 public class StudentRestController {
 
     private final StudentService studentService;
