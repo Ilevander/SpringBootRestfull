@@ -1,0 +1,510 @@
+{
+	"info": {
+		"_postman_id": "32e33ea6-0b42-473b-b253-6a2d238005f0",
+		"name": "SpringBootRestJava-activityManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29700066"
+	},
+	"item": [
+		{
+			"name": "Activities",
+			"item": [
+				{
+					"name": "Search and find Activities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/activities?keyword=java&page=1&size=4",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"activities"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "java"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Activity",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/activities/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"activities",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Activity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"activityName\": \"Java Angular Full-Stack\",\r\n            \"activityDuration\": \"70Hours\",\r\n            \"activityDescription\": \"Full-Stack java Angular web application added\",\r\n            \"classGroup\": \"Group 4iiR1 1 G2\",\r\n            \"semester\": \"Semester2\",\r\n            \"instructor\": {\r\n                \"instructorId\": 1,\r\n                \"firstName\": \"instructor00FN\",\r\n                \"lastName\": \"instructor00LN\",\r\n                \"summary\": \"Software Engineering\",\r\n                \"user\": null\r\n            }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/activities",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Activity",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n             \"activityId\": 7,\r\n            \"activityName\": \"Java Course Updated\",\r\n            \"activityDuration\": \"99Hours\",\r\n            \"activityDescription\": \"Updated course , this is an exam , you will receive the PDF\",\r\n            \"classGroup\": \"Group66\",\r\n            \"semester\": \"Semester88\",\r\n            \"instructor\": {\r\n                \"instructorId\": 1,\r\n                \"firstName\": \"Ilyass\",\r\n                \"lastName\": \"ELAMRI\",\r\n                \"summary\": \"Software Engineering\",\r\n                \"user\": null\r\n            }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/activities/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"activities",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enroll Student In Activity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/activities/9/enroll/students/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"activities",
+								"9",
+								"enroll",
+								"students",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Instructor",
+			"item": [
+				{
+					"name": "Search and find instructors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/instructors?keyword=instructor&page=2&size=3",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"instructors"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "instructor"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Instructor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/instructors/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"instructors",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save/Create Instructor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \r\n        \"firstName\": \"instructorTOTO\",\r\n        \"lastName\": \"instructorBENToTo\",\r\n        \"summary\": \"Hibernate\",\r\n        \"user\": {\r\n            \"email\":\"instructornew@gmail.com\",\r\n            \"password\":\"123\"\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/instructors",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"instructors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Instructor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instructorId\": 10,\r\n    \"firstName\": \"TITI\",\r\n    \"lastName\": \"ait titi\",\r\n    \"summary\": \"Cyber Security\",\r\n    \"user\": {\r\n        \"email\":\"titi@gmail.com\",\r\n        \"password\":\"titi@123\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/instructors/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"instructors",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activities By Instructor Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/instructors/8/activities?size=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"instructors",
+								"8",
+								"activities"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "load Instructor By Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/instructors/find?email=instructor0@gmail.com",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"instructors",
+								"find"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "instructor0@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "Get all students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/students?keyword=instructor&page=2&size=3",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"students"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "instructor"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "size",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/students/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"students",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save/Create Student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n            \"firstName\": \"ilyass Student\",\r\n            \"lastName\": \"EL AMRI Student\",\r\n            \"level\": \"4iiR1 G2\",\r\n            \"user\": {\r\n                \"email\":\"ilyasselamri@gmail.com\",\r\n                \"password\":\"ilyass@123\"\r\n            }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/students",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Student",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"studentId\":7,\r\n    \"firstName\": \"update\",\r\n    \"lastName\": \"update\",\r\n    \"level\": \"updated\",\r\n    \"user\": {\r\n        \"email\":\"update@gmail.com\",\r\n        \"password\":\"update@123\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8082/students/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"students",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activities By Student Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/students/1/activities",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"students",
+								"1",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non Subscribed Activities By Student Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/students/1/other-activities",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"students",
+								"1",
+								"other-activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non Subscribed Activities By Student Id Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/students/find?email=student8@gmail.com",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"students",
+								"find"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "student8@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/users?email=instructor9@gmail.com",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "instructor9@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
