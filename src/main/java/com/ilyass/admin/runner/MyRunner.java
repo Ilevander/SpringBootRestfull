@@ -38,7 +38,9 @@ public class MyRunner implements CommandLineRunner {
         createActivities();
         StudentDTO student = createStudent();
         assignCourseToStudent(student);
+        createStudents();
     }
+
 
     private void createRoles() {
         Arrays.asList("Admin", "Instructor", "Student").forEach(roleService::createRole);
@@ -92,5 +94,20 @@ public class MyRunner implements CommandLineRunner {
 
     private void assignCourseToStudent(StudentDTO student) {
         activityService.assignStudentToActivity(1L, student.getStudentId());
+    }
+
+    private void createStudents() {
+        for (int i = 1; i < 10; i++) {
+            StudentDTO studentDTO = new StudentDTO();
+            studentDTO.setFirstName("studentFN" + i);
+            studentDTO.setLastName("studentLN" + i);
+            studentDTO.setLevel("intermediate" + i);
+            UserDTO userDTO = new UserDTO();
+            userDTO.setEmail("student" + i + "@gmail.com");
+            userDTO.setPassword("1234");
+            studentDTO.setUser(userDTO);
+            studentService.createStudent(studentDTO);
+
+        }
     }
 }
