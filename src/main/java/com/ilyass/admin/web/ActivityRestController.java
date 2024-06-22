@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/activities")
+@CrossOrigin("*")
 public class ActivityRestController {
 
     private ActivityService activityService;
