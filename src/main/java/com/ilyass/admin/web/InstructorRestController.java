@@ -56,7 +56,7 @@ public class InstructorRestController {
     }
 
     @PutMapping("/{instructorId}")
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Instructor')")
     public InstructorDTO updateInstructor(@RequestBody InstructorDTO instructorDTO, @PathVariable Long instructorId) {
         instructorDTO.setInstructorId(instructorId);
         return instructorService.updateInstructor(instructorDTO);
@@ -71,7 +71,7 @@ public class InstructorRestController {
     }
 
     @GetMapping("/find")
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('Instructor')")
     public InstructorDTO loadInstructorByEmail(@RequestParam(name = "email", defaultValue = "") String email) {
         return instructorService.loadInstructorByEmail(email);
     }
