@@ -5,6 +5,7 @@ import com.ilyass.admin.dao.UserDao;
 import com.ilyass.admin.entity.Role;
 import com.ilyass.admin.entity.User;
 import com.ilyass.admin.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,10 +16,12 @@ public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
     private RoleDao roleDao;
+    private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDao userDao,RoleDao roleDao) {
+    public UserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.roleDao = roleDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -28,7 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(String email, String password) {
-        return userDao.save(new User(email, password));
+        String encodedPassword = passwordEncoder.encode(password);
+        return userDao.save(new User(email, encodedPassword));
     }
 
     @Override
