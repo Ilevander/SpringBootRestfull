@@ -71,8 +71,6 @@ public class MyRunner implements CommandLineRunner {
             activityDTO.setActivityDescription("Java" + i);
             activityDTO.setActivityDuration(i + "Hours");
             activityDTO.setActivityName("Java Course" + i);
-            activityDTO.setClassGroup("Group" + i);
-            activityDTO.setSemester("Semester" + i);
             InstructorDTO instructorDTO = new InstructorDTO();
             instructorDTO.setInstructorId(1L);
             activityDTO.setInstructor(instructorDTO);

@@ -13,38 +13,39 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class ActivityServiceImpl implements ActivityService {
 
-    //Inject ActivityDao , ActivityMapper , InstructorDao
     private ActivityDao activityDao;
+
     private ActivityMapper activityMapper;
+
     private InstructorDao instructorDao;
+
     private StudentDao studentDao;
 
-    public ActivityServiceImpl(ActivityDao activityDao,ActivityMapper activityMapper,InstructorDao instructorDao, StudentDao studentDao) {
+    public ActivityServiceImpl(ActivityDao activityDao, ActivityMapper activityMapper, InstructorDao instructorDao, StudentDao studentDao) {
         this.activityDao = activityDao;
         this.activityMapper = activityMapper;
         this.instructorDao = instructorDao;
         this.studentDao = studentDao;
     }
 
-
     @Override
     public Activity loadActivityById(Long activityId) {
-        return activityDao.findById(activityId).orElseThrow(()->new EntityNotFoundException("Activity With ID "+activityId+" Not Found"));
+        return activityDao.findById(activityId).orElseThrow(() -> new EntityNotFoundException("Activity with ID " + activityId + " Not Found"));
     }
 
     @Override
     public ActivityDTO createActivity(ActivityDTO activityDTO) {
         Activity activity = activityMapper.fromActivityDTO(activityDTO);
-        Instructor instructor = instructorDao.findById(activityDTO.getInstructor().getInstructorId()).orElseThrow(() -> new EntityNotFoundException("Instructor With ID " + activityDTO.getInstructor().getInstructorId() + " Not Found"));
+        Instructor instructor = instructorDao.findById(activityDTO.getInstructor().getInstructorId()).orElseThrow(() -> new EntityNotFoundException("Instructor with ID " + activityDTO.getInstructor().getInstructorId() + " Not Found"));
         activity.setInstructor(instructor);
         Activity savedActivity = activityDao.save(activity);
         return activityMapper.fromActivity(savedActivity);
@@ -53,7 +54,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public ActivityDTO updateActivity(ActivityDTO activityDTO) {
         Activity loadedActivity = loadActivityById(activityDTO.getActivityId());
-        Instructor instructor = instructorDao.findById(activityDTO.getInstructor().getInstructorId()).orElseThrow(() -> new EntityNotFoundException("Instructor With ID " + activityDTO.getInstructor().getInstructorId() + " Not Found"));
+        Instructor instructor = instructorDao.findById(activityDTO.getInstructor().getInstructorId()).orElseThrow(() -> new EntityNotFoundException("Instructor with ID " + activityDTO.getInstructor().getInstructorId() + " Not Found"));
         Activity activity = activityMapper.fromActivityDTO(activityDTO);
         activity.setInstructor(instructor);
         activity.setStudents(loadedActivity.getStudents());
@@ -63,14 +64,14 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Page<ActivityDTO> findActivitiesByActivityName(String keyword, int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page,size);
-        Page<Activity> activityPage = activityDao.findActivitiesByActivityNameContains(keyword,pageRequest);
-        return new PageImpl<>(activityPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()));
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Activity> activitiesPage = activityDao.findActivitiesByActivityNameContains(keyword, pageRequest);
+        return new PageImpl<>(activitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()), pageRequest, activitiesPage.getTotalElements());
     }
 
     @Override
     public void assignStudentToActivity(Long activityId, Long studentId) {
-        Student student = studentDao.findById(studentId).orElseThrow(()->new EntityNotFoundException("Student With ID "+studentId+" Not Found"));
+        Student student = studentDao.findById(studentId).orElseThrow(() -> new EntityNotFoundException("Student with ID " + studentId + " Not Found"));
         Activity activity = loadActivityById(activityId);
         activity.assignStudentToActivity(student);
     }
@@ -78,26 +79,26 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public Page<ActivityDTO> fetchActivitiesForStudent(Long studentId, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Activity> studentActivitiesPage = activityDao.getActivitiesByStudentId(studentId, pageRequest);
-        return new PageImpl<>(studentActivitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()));
+        Page<Activity> studentActivitiesPage = activityDao.getActivitiesByStudentId(studentId,pageRequest);
+        return new PageImpl<>(studentActivitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()), pageRequest, studentActivitiesPage.getTotalElements());
     }
 
     @Override
     public Page<ActivityDTO> fetchNonEnrolledInActivitiesForStudent(Long studentId, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Activity> nonEnrolledInActivitiesPage = activityDao.getNonEnrolledInActivitiesByStudentId(studentId, pageRequest);
+        Page<Activity> nonEnrolledInActivitiesPage = activityDao.getNonEnrolledInActivitiesByStudentId(studentId,pageRequest);
         return new PageImpl<>(nonEnrolledInActivitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()), pageRequest, nonEnrolledInActivitiesPage.getTotalElements());
     }
 
     @Override
-    public void deleteActivity(Long activityId) {
-         activityDao.deleteById(activityId);
+    public void removeActivity(Long activityId) {
+        activityDao.deleteById(activityId);
     }
 
     @Override
     public Page<ActivityDTO> fetchActivitiesForInstructor(Long instructorId, int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page <Activity> instructorActivitiesPage = activityDao.getActivitiesByInstructorId(instructorId, pageRequest);
+        Page<Activity> instructorActivitiesPage = activityDao.getActivitiesByInstructorId(instructorId, pageRequest);
         return new PageImpl<>(instructorActivitiesPage.getContent().stream().map(activity -> activityMapper.fromActivity(activity)).collect(Collectors.toList()), pageRequest, instructorActivitiesPage.getTotalElements());
     }
 }

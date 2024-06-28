@@ -82,7 +82,7 @@ public class InstructorServiceImpl implements InstructorService {
     public void removeInstructor(Long instructorId) {
         Instructor instructor = loadInstructorById(instructorId);
         for(Activity activity : instructor.getActivities()) {
-            activityService.deleteActivity(activity.getActivityId());
+            activityService.removeActivity(activity.getActivityId());
         }
         instructorDao.deleteById(instructorId);
     }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class ActivityRestController {
 
-    private ActivityService activityService;
+    private final ActivityService activityService;
 
     public ActivityRestController(ActivityService activityService) {
         this.activityService = activityService;
@@ -20,15 +20,15 @@ public class ActivityRestController {
     @GetMapping
     @PreAuthorize("hasAuthority('Admin')")
     public Page<ActivityDTO> searchActivities(@RequestParam(name = "keyword", defaultValue = "") String keyword,
-                                           @RequestParam(name = "page", defaultValue = "0") int page,
-                                           @RequestParam(name = "size", defaultValue = "10") int size) {
+                                              @RequestParam(name = "page", defaultValue = "0") int page,
+                                              @RequestParam(name = "size", defaultValue = "5") int size) {
         return activityService.findActivitiesByActivityName(keyword, page, size);
     }
 
     @DeleteMapping("/{activityId}")
     @PreAuthorize("hasAuthority('Admin')")
     public void deleteActivity(@PathVariable Long activityId) {
-        activityService.deleteActivity(activityId);
+        activityService.removeActivity(activityId);
     }
 
     @PostMapping
@@ -45,7 +45,7 @@ public class ActivityRestController {
     }
 
     @PostMapping("/{activityId}/enroll/students/{studentId}")
-    @PreAuthorize("hasAnyAuthority('Admin','Instructor')")
+    @PreAuthorize("hasAuthority('Student')")
     public void enrollStudentInActivity(@PathVariable Long activityId, @PathVariable Long studentId) {
         activityService.assignStudentToActivity(activityId, studentId);
     }
